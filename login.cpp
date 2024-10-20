@@ -15,20 +15,39 @@ using namespace std;
 
 void login::Login()
 {
-    /* string count;
-    string username, password, id, recordPass, recordSecurity;
-    system("clear");
+    string username, password;
+    system("CLS"); 
+    cout << "\n NOTE: This is for existing users. If new, kindly register." << endl;
     cout << "\n\t\t\t Please enter the username and password: " << endl;
     cout << "\t\t\t USERNAME: ";
     cin >> username;
     cout << "\t\t\t PASSWORD: ";
     cin >> password;
-
-    string loginHash = password;
     hash<string> mystdhash;
-    int loginHashPassword = mystdhash(loginHash); */
-  // ******************Enter your code here ***********************
+    string loginHashPassword = to_string(mystdhash(password)); 
+
+    retrieveData(username, loginHashPassword); 
 }
+
+
+void login::retrieveData(string username, string loginHashPassword) {
+    string id, recordPass;
+    ifstream inputFile("data.txt"); 
+    if (!inputFile) {
+        cout << "Error: Could not open the file!" << endl;// file is unable to open code is runnung fine
+        return;
+    }
+    while (inputFile >> id >> recordPass) {
+        if (id == username && recordPass == loginHashPassword) {
+            cout << "\n\t\t LOGIN SUCCESSFUL" << endl;
+            cout << "\n\t\t\tWELCOME" << endl;
+            return; 
+        }
+    }
+    cout <<"\t\t\tERROR! WRONG USERNAME OR PASSWORD " << endl;
+    inputFile.close();
+}
+
 
 void login::Registration()
 {
